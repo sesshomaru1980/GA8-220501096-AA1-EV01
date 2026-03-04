@@ -1,0 +1,254 @@
+{
+  "info": {
+    "name": "NeoBarber API - Testing CRUD (Appointments)",
+    "_postman_id": "1c1c1111-2222-3333-4444-555555555555",
+    "description": "Colección para probar la API NeoBarber (CRUD de citas + validaciones). Importar en Postman y ejecutar requests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health - (Opcional)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "CREATE - Crear cita (OK)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"clientName\": \"Luis Ramirez\",\n  \"barberName\": \"Carlos\",\n  \"service\": \"Corte degradado\",\n  \"date\": \"2026-04-14\",\n  \"time\": \"10:00\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/appointments",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "appointments"]
+        }
+      }
+    },
+    {
+      "name": "READ - Listar citas (OK)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/appointments",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "appointments"]
+        }
+      }
+    },
+    {
+      "name": "READ - Obtener cita por ID (editar ID)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/appointments/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "appointments", "1"]
+        }
+      }
+    },
+    {
+      "name": "UPDATE - Actualizar servicio (editar ID)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"service\": \"Corte + Lavado\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/appointments/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "appointments", "1"]
+        }
+      }
+    },
+    {
+      "name": "UPDATE - Cambiar status a CANCELADA (editar ID)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"CANCELADA\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/appointments/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "appointments", "1"]
+        }
+      }
+    },
+    {
+      "name": "UPDATE - Cambiar status a ACTIVA (editar ID)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"status\": \"ACTIVA\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/appointments/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "appointments", "1"]
+        }
+      }
+    },
+    {
+      "name": "DELETE - Eliminar cita (editar ID)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/appointments/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "appointments", "1"]
+        }
+      }
+    },
+    {
+      "name": "VALIDACIÓN 400 - Campos vacíos (debe fallar)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"clientName\": \"\",\n  \"barberName\": \"Carlos\",\n  \"service\": \"Corte\",\n  \"date\": \"2026-04-14\",\n  \"time\": \"10:30\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/appointments",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "appointments"]
+        }
+      }
+    },
+    {
+      "name": "VALIDACIÓN 400 - Domingo (debe fallar)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"clientName\": \"Ana\",\n  \"barberName\": \"Carlos\",\n  \"service\": \"Corte\",\n  \"date\": \"2026-04-12\",\n  \"time\": \"10:00\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/appointments",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "appointments"]
+        }
+      }
+    },
+    {
+      "name": "VALIDACIÓN 400 - Hora inválida (10:10) (debe fallar)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"clientName\": \"Pedro\",\n  \"barberName\": \"Carlos\",\n  \"service\": \"Corte\",\n  \"date\": \"2026-04-14\",\n  \"time\": \"10:10\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/appointments",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "appointments"]
+        }
+      }
+    },
+    {
+      "name": "VALIDACIÓN 400 - Hora 20:00 (debe fallar, termina después del cierre)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"clientName\": \"Mateo\",\n  \"barberName\": \"Carlos\",\n  \"service\": \"Corte\",\n  \"date\": \"2026-04-14\",\n  \"time\": \"20:00\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/appointments",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "appointments"]
+        }
+      }
+    },
+    {
+      "name": "VALIDACIÓN 409 - Doble reserva mismo barbero (debe fallar si ya existe una cita a esa hora)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"clientName\": \"Cliente B\",\n  \"barberName\": \"Carlos\",\n  \"service\": \"Barba\",\n  \"date\": \"2026-04-14\",\n  \"time\": \"10:00\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/appointments",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "appointments"]
+        }
+      }
+    }
+  ]
+}
